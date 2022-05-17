@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia';
-import { commodityList } from './commodity';
+import { commodityList, ICommodity } from './commodity';
+
+interface ICar {
+    [key: string]: ICommodity;
+}
+
 export const useStore = defineStore('store', {
     state: () => ({
         nowViewIndex: 0,
+        car: <ICar>{},
     }),
     actions: {
         moveViewIndex(n: number) {
@@ -17,6 +23,16 @@ export const useStore = defineStore('store', {
                 return;
             }
             this.nowViewIndex += n;
+        },
+        addCar(commodityName: string) {
+            const item = commodityList.find((e) => e.name === commodityName);
+            if (!item) {
+                throw Error(`Not find ${commodityName}`);
+            }
+            this.car[commodityName] = item;
+        },
+        clearCar() {
+            this.car = {};
         },
     },
 });

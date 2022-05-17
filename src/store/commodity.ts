@@ -32,3 +32,12 @@ export const commodityList = [
         class: ['bg-danger', 'text-white'],
     },
 ];
+
+export interface ICommodity {
+    name: string;
+    src: string;
+    description: string;
+    price: number;
+    class: string[];
+}
+

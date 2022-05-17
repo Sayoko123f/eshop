@@ -14,17 +14,59 @@
                 <p class="py-2 text-2xl font-bold text-[#FF0000]">
                     特價 {{ item.price }} 元
                 </p>
-                <button class="rounded-md bg-success px-4 py-2 text-white">
+                <button
+                    class="relative rounded-md bg-success px-4 py-2 text-white hover:bg-success-hover"
+                    @click="addCar"
+                >
                     放入購物車
                 </button>
             </div>
         </div>
+        <Teleport to="#portal-target">
+            <OverlayScreen :loading="true" v-if="isLoading" />
+            <OverlayScreen v-if="showAddTip">
+                <div class="flex w-48 bg-white p-4 text-success shadow-md rounded">
+                    <CheckCircleIcon class="h-6 w-6 pr-1" />
+                    <span>已加入購物車</span>
+                </div>
+            </OverlayScreen>
+        </Teleport>
     </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { commodityList } from '../store/commodity';
 import { useStore } from '../store/use-store';
+import { CheckCircleIcon } from '@heroicons/vue/solid';
+import OverlayScreen from './overlay-screen.vue';
 const store = useStore();
 const item = computed(() => commodityList[store.nowViewIndex]);
+
+const showAddTip = ref(false);
+
+const isLoading = ref(false);
+
+function wait(ms: number) {
+    return new Promise((resolve) => {
+        window.setTimeout(resolve, ms);
+    });
+}
+
+function addCar() {
+    isLoading.value = true;
+    store.addCar(item.value.name);
+    wait(240)
+        .then(async () => {
+            isLoading.value = false;
+            showAddTip.value = true;
+            await wait(420);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+        .finally(() => {
+            showAddTip.value = false;
+            isLoading.value = false;
+        });
+}
 </script>
