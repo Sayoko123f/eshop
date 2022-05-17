@@ -5,7 +5,7 @@
         </div>
         <div class="flex flex-shrink-0 flex-grow-0 flex-col p-4 md:flex-row">
             <div class="h-[360px] w-[260px]">
-                <img class="h-[360px] w-[240px]" :src="item.src" />
+                <img class="h-[360px] w-[240px]" :src="`imgs/${item.src}`" />
             </div>
             <div class="max-w-md p-4">
                 <p class="pb-2">
@@ -25,7 +25,9 @@
         <Teleport to="#portal-target">
             <OverlayScreen :loading="true" v-if="isLoading" />
             <OverlayScreen v-if="showAddTip">
-                <div class="flex w-48 bg-white p-4 text-success shadow-md rounded">
+                <div
+                    class="flex w-48 rounded bg-white p-4 text-success shadow-md"
+                >
                     <CheckCircleIcon class="h-6 w-6 pr-1" />
                     <span>已加入購物車</span>
                 </div>

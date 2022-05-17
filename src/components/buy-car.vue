@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <table class="text-center w-full table-fixed">
+        <table class="w-full table-fixed text-center">
             <thead>
                 <tr class="border-b-2">
                     <th class="py-2">商品圖示</th>
@@ -12,8 +12,8 @@
                 <tr class="border-b" v-for="item in store.car" :key="item.name">
                     <td class="flex items-center justify-center">
                         <img
-                            class="h-24 w-16 my-2"
-                            :src="item.src"
+                            class="my-2 h-24 w-16"
+                            :src="`imgs/${item.src}`"
                             :alt="item.name"
                         />
                     </td>
